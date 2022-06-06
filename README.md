@@ -14,3 +14,5 @@ Cac model có ảnh để thêm tên ảnh vào .ok
   dich vu them loadhome
   them table camnangdulich
   thay doi kieu ngay thang
+
+  https://rapidapi.com/collection/hotels-apis
