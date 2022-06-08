@@ -58,8 +58,12 @@ require("./routes/Chiphi")(app);
 require("./routes/Hoadoncanhan")(app);
 require("./routes/Thongbao")(app);
 require("./routes/SendEmail")(app);
+require("./routes/plane")(app);
+require("./routes/brand")(app);
+require("./routes/ticket")(app);
+require("./routes/flight")(app);
 
 app.use(function (err, req, res, next) {
     res.status(500).send(err)
 })
-app.listen(process.env.PORT || 666, () => { console.log("Chào mừng bạn đến với Backend"); })
+app.listen(process.env.PORT || 8000, () => { console.log("Chào mừng bạn đến với Backend"); })
