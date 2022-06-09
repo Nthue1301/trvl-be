@@ -113,7 +113,7 @@ exports.SearchTicketNewDAO = (from_id, to_id, start_date, end_date) => {
             SQL = "select * from flight where START_DATE >= str_to_date('? 00:00:00', '%d/%m/%Y %H:%i:%S') AND START_DATE <= str_to_date('? 23:59:59', '%d/%m/%Y %H:%i:%S') and GEO_ID_FROM = ? and GEO_ID_TO = ?";
             const result = await query(mysql.format(SQL, [start_date, start_date, from_id, to_id]));
             return DB_RESP(200, {
-                directFlight: result,
+                oneWayFlight: result,
                 returnFLight: []
             });
         } else {
@@ -130,7 +130,7 @@ exports.SearchTicketNewDAO = (from_id, to_id, start_date, end_date) => {
             const result = await query(mysql.format(SQL, [start_date, start_date, from_id, to_id]));
             const result1 = await query(mysql.format(SQL1, [end_date, end_date, to_id, from_id]));
             return DB_RESP(200, {
-                directFlight: result,
+                oneWayFlight: result,
                 returnFLight: result1
             });
         }
