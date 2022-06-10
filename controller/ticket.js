@@ -1,7 +1,7 @@
 const { CreateTicketDAO, CancelTicketDAO, EditTicketDAO, GetTicketDAO, SearchTicketDAO, SearchTicketNewDAO } = require('../models/ticket');
 const { GetNumber, GetString } = require('./../Utils/GetValue');
 const moment = require("moment");
-const { RespCustomCode, CatchErr } = require("./../Utils/UtilsFunction");
+const { RespCustomCode, CatchErr, SuccessResp } = require("./../Utils/UtilsFunction");
 const e = require('express');
 
 exports.CreateTicket = async function(req, resp) {
@@ -117,13 +117,13 @@ exports.SearchTicket = async function(req, resp) {
     }
 }
 
-exports.SearchTicketNew = (req, resp) => {
+exports.SearchTicketNew = async(req, resp) => {
     const reqData = req.body;
     try {
         const from_id       = GetNumber(reqData, "from_id");
         const to_id         = GetNumber(reqData, "to_id");
-        const start_date    = GetString(reqData, "start_date");
-        const end_date      = GetString(reqData, "end_date", false);
+        let start_date    = GetString(reqData, "start_date");
+        let end_date      = GetString(reqData, "end_date", false);
         
         if (start_date !== '' && !moment(start_date, "DD/MM/YYYY").isValid()) {
             RespCustomCode(resp,900, "'start_date' phải là định dạng 'DD/MM/YYYY'");
@@ -139,10 +139,46 @@ exports.SearchTicketNew = (req, resp) => {
         end_date    = moment(end_date, "DD/MM/YYYY").format("DD/MM/YYYY");
 
         const result = await SearchTicketNewDAO(from_id, to_id, start_date, end_date);
+        let oneWayFlight = [], returnFLight = [];
+
         if (result.code === 200) {
-
+            for (let i of result.msg.oneWayFlight) {
+                oneWayFlight.push({
+                    flight_id: i.FLIGHT_ID,
+                    geo_id_from: i.GEO_ID_FROM,
+                    geo_id_to: i.GEO_ID_TO,
+                    adult_price: i.ADULT_PRICE,
+                    child_price: i.CHILD_PRICE,
+                    baby_price: i.BABY_PRICE,
+                    plane_id: i.PLANE_ID,
+                    start_date: moment(i.START_DATE).format("DD/MM/YYYY"),
+                    to_date: moment(i.TO_DATE).format("DD/MM/YYYY HH:mm:ss"),
+                    brand_id: i.BRAND_ID,
+                    brand_logo: i.BRAND_LOGO,
+                    brand_name: i.BRAND_NAME,
+                    brand_pre: i.BRAND_PRE
+                });
+            }
+            for (let i of result.msg.returnFLight) {
+                returnFLight.push({
+                    flight_id: i.FLIGHT_ID,
+                    geo_id_from: i.GEO_ID_FROM,
+                    geo_id_to: i.GEO_ID_TO,
+                    adult_price: i.ADULT_PRICE,
+                    child_price: i.CHILD_PRICE,
+                    baby_price: i.BABY_PRICE,
+                    plane_id: i.PLANE_ID,
+                    start_date: moment(i.START_DATE).format("DD/MM/YYYY"),
+                    to_date: moment(i.TO_DATE).format("DD/MM/YYYY HH:mm:ss"),
+                    brand_id: i.BRAND_ID,
+                    brand_logo: i.BRAND_LOGO,
+                    brand_name: i.BRAND_NAME,
+                    brand_pre: i.BRAND_PRE
+                });
+            }
+            SuccessResp(resp, {oneWayFlight, returnFLight});
         } else {
-
+            RespCustomCode(resp, result.code, result.msg);
         }
     } catch(e) {
         CatchErr(resp, e, "SearchTicketNew - ticket.js");

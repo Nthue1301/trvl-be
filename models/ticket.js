@@ -106,29 +106,21 @@ exports.SearchTicketDAO = async(plane_info, price_from, price_to, start_date, lo
     }
 }
 
-exports.SearchTicketNewDAO = (from_id, to_id, start_date, end_date) => {
+exports.SearchTicketNewDAO = async (from_id, to_id, start_date, end_date) => {
     try {
         let SQL, SQL1;
         if (end_date === '') {
-            SQL = "select * from flight where START_DATE >= str_to_date('? 00:00:00', '%d/%m/%Y %H:%i:%S') AND START_DATE <= str_to_date('? 23:59:59', '%d/%m/%Y %H:%i:%S') and GEO_ID_FROM = ? and GEO_ID_TO = ?";
-            const result = await query(mysql.format(SQL, [start_date, start_date, from_id, to_id]));
+            SQL = "select * from flight a, brand b, plane c where a.START_DATE >= str_to_date(?, '%d/%m/%Y %H:%i:%S') AND a.START_DATE <= str_to_date(?, '%d/%m/%Y %H:%i:%S') and a.GEO_ID_FROM = ? and a.GEO_ID_TO = ?  AND a.PLANE_ID = c.PLANE_ID AND c.BRAND_ID = b.BRAN_ID";
+            const result = await query(mysql.format(SQL, [`${start_date} 00:00:00`, `${start_date} 23:59:59`, from_id, to_id]));
             return DB_RESP(200, {
                 oneWayFlight: result,
                 returnFLight: []
             });
         } else {
-            SQL = `select * from flight where 
-                    START_DATE >= str_to_date('? 00:00:00', '%d/%m/%Y %H:%i:%S') AND 
-                    START_DATE <= str_to_date('? 23:59:59', '%d/%m/%Y %H:%i:%S') AND 
-                    GEO_ID_FROM = ? AND 
-                    GEO_ID_TO = ?`;
-            SQL1 = `SELECT * FROM FLIGHT WHERE 
-                    END_DATE >= str_to_date('? 00:00:00', '%d/%m/%Y %H:%i:%S') AND 
-                    END_DATE <= str_to_date('? 23:59:59', '%d/%m/%Y %H:%i:%S') AND 
-                    GEO_ID_FROM = ? AND 
-                    GEO_ID_TO = ?`;
-            const result = await query(mysql.format(SQL, [start_date, start_date, from_id, to_id]));
-            const result1 = await query(mysql.format(SQL1, [end_date, end_date, to_id, from_id]));
+            SQL = `select * from flight a, brand b, plane c where a.START_DATE >= str_to_date(?, '%d/%m/%Y %H:%i:%S') AND a.START_DATE <= str_to_date(?, '%d/%m/%Y %H:%i:%S') AND a.GEO_ID_FROM = ? AND a.GEO_ID_TO = ?  AND a.PLANE_ID = c.PLANE_ID AND c.BRAND_ID = b.BRAN_ID`;
+            SQL1 = `SELECT * FROM flight a, brand b, plane c WHERE a.TO_DATE >= str_to_date(?, '%d/%m/%Y %H:%i:%S') AND a.TO_DATE <= str_to_date(?, '%d/%m/%Y %H:%i:%S') AND a.GEO_ID_FROM = ? AND a.GEO_ID_TO = ?  AND a.PLANE_ID = c.PLANE_ID AND c.BRAND_ID = b.BRAN_ID`;
+            const result = await query(mysql.format(SQL, [`${start_date} 00:00:00`, `${start_date} 23:59:59`, from_id, to_id]));
+            const result1 = await query(mysql.format(SQL1, [`${end_date} 00:00:00`, `${end_date} 23:59:59`, to_id, from_id]));
             return DB_RESP(200, {
                 oneWayFlight: result,
                 returnFLight: result1
