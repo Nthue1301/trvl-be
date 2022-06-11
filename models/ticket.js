@@ -130,3 +130,30 @@ exports.SearchTicketNewDAO = async (from_id, to_id, start_date, end_date) => {
         return DB_RESP(900, e);
     }
 }
+
+exports.BookTicketDAO = async(uid, flight_id, email, phone_number, address, passengers) => {
+    try {
+        const totalPassenger = passengers.length;
+        let SQL = "SELECT * FROM TICKET WHERE FLIGHT_ID = ? AND UID_BOOKED = 0";
+        const r = await query(mysql.format(SQL, [flight_id]));
+        if (r.length < totalPassenger) {
+            console.log("FAIL");
+            return DB_RESP(900, "Số ghế trống không còn đủ!");
+        } else {
+            console.log("OK");
+            SQL = "SELECT TICKET_ID FROM TICKET WHERE FLIGHT_ID = ? AND UID_BOOKED = 0 LIMIT ?";
+            const r1 = await query(mysql.format(SQL, [flight_id, totalPassenger]));
+            console.log(r1);
+            SQL = "UPDATE TICKET SET UID_BOOKED = ?, EMAIL = ?, CUS_NAME = ?, PHONE = ?, ADDRESS = ?, STATE = ? WHERE TICKET_ID = ?";
+            let ListPendingQuery = [];
+            r1.map(function(i, index) {
+                const f = query(mysql.format(SQL, [uid, email, passengers[index].cus_name, phone_number, address, passengers[index].type_of_passenger, i.TICKET_ID]));
+                ListPendingQuery.push(f);
+            });
+            await Promise.all(ListPendingQuery);
+            return DB_RESP(200, "");
+        }
+    } catch (e) {
+        return DB_RESP(900, e);
+    }
+}

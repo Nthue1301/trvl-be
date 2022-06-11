@@ -1,8 +1,7 @@
-const { CreateTicketDAO, CancelTicketDAO, EditTicketDAO, GetTicketDAO, SearchTicketDAO, SearchTicketNewDAO } = require('../models/ticket');
-const { GetNumber, GetString } = require('./../Utils/GetValue');
+const { CreateTicketDAO, CancelTicketDAO, EditTicketDAO, GetTicketDAO, SearchTicketDAO, SearchTicketNewDAO, BookTicketDAO } = require('../models/ticket');
+const { GetNumber, GetString, GetJSONArray } = require('./../Utils/GetValue');
 const moment = require("moment");
-const { RespCustomCode, CatchErr, SuccessResp } = require("./../Utils/UtilsFunction");
-const e = require('express');
+const { RespCustomCode, CatchErr, SuccessResp, DB_RESP } = require("./../Utils/UtilsFunction");
 
 exports.CreateTicket = async function(req, resp) {
     let reqData = req.body;
@@ -182,5 +181,42 @@ exports.SearchTicketNew = async(req, resp) => {
         }
     } catch(e) {
         CatchErr(resp, e, "SearchTicketNew - ticket.js");
+    }
+}
+
+exports.BookTicket = async(req, resp) => {
+    const reqData = req.body;
+    try {
+        const uid           = GetNumber(reqData, "uid");
+        const flight_id     = GetNumber(reqData, "flight_id");
+        const email         = GetString(reqData, "email");
+        // const name          = GetString(reqData, "name");
+        const phone_number  = GetString(reqData, "phone_number");
+        const address       = GetString(reqData, "address");
+        const passengers    = GetJSONArray(reqData, "passengers");
+        // const num_of_adult  = GetNumber(reqData, "num_of_adult");
+        // const num_of_child  = GetNumber(reqData, "num_of_child");
+        // const num_of_baby   = GetNumber(reqData, "num_of_baby");
+
+        if (passengers.length === 0) {
+            RespCustomCode(resp, 900, "Phải có ít nhất một hành khách!");
+            return;
+        }
+
+        for (const [index, i] of passengers.entries()) {
+            if (!i.hasOwnProperty("type_of_passenger") || !i.hasOwnProperty("cus_name")) {
+                RespCustomCode(resp, 900, `Phần tủ vị trí ${index} phải có thuộc tính 'type_of_passenger' và 'cus_name'`);
+                return;
+            }
+        }
+
+        const result = await BookTicketDAO(uid, flight_id, email, phone_number, address, passengers);
+        if (result.code === 200) {
+            SuccessResp(resp, "Đặt vé thành công");
+        } else {
+            RespCustomCode(resp, result.code, result.msg);
+        }
+    } catch(e) {
+        CatchErr(resp, e, "BookTicket - ticket.js");
     }
 }
