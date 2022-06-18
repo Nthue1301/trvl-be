@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     loaitourId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Loaitour",
+        model: "loaitour",
         key: "id"
       }
     },
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'TourLoaitour',
+    modelName: 'tourloaitour',
   });
   return TourLoaitour;
 };

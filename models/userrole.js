@@ -19,14 +19,14 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "User",
+        model: "user",
         key: "id"
       }
     },
     roleId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Role",
+        model: "role",
         key: "id"
       }
     },
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     github: DataTypes.STRING(500)
   }, {
     sequelize,
-    modelName: 'UserRole',
+    modelName: 'userrole',
   });
   return UserRole;
 };

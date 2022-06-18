@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     chitieunam: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Chitieu',
+    modelName: 'chitieu',
   });
   return Chitieu;
 };

@@ -11,7 +11,7 @@
  Target Server Version : 100424
  File Encoding         : 65001
 
- Date: 09/06/2022 21:25:28
+ Date: 18/06/2022 21:30:48
 */
 
 SET NAMES utf8mb4;
@@ -219,7 +219,7 @@ CREATE TABLE `diadiems`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `quocgiaId`(`quocgiaId`) USING BTREE,
   CONSTRAINT `diadiems_ibfk_1` FOREIGN KEY (`quocgiaId`) REFERENCES `quocgias` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of diadiems
@@ -376,7 +376,7 @@ CREATE TABLE `flight`  (
 -- Records of flight
 -- ----------------------------
 INSERT INTO `flight` VALUES (17, 5, 8, 100000, 120000, 140000, 8, '2022-06-08 23:15:36', '2022-06-14 22:15:32');
-INSERT INTO `flight` VALUES (18, 1, 10, 100000, 10000, 100000, 8, '2022-02-10 00:00:00', '2022-02-10 00:00:00');
+INSERT INTO `flight` VALUES (18, 8, 5, 100000, 10000, 100000, 8, '2022-02-10 00:00:00', '2022-02-10 04:00:00');
 
 -- ----------------------------
 -- Table structure for geography
@@ -11266,12 +11266,15 @@ CREATE TABLE `plane`  (
   PRIMARY KEY (`PLANE_ID`) USING BTREE,
   INDEX `BRAND_ID`(`BRAND_ID`) USING BTREE,
   CONSTRAINT `plane_ibfk_1` FOREIGN KEY (`BRAND_ID`) REFERENCES `brand` (`BRAN_ID`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of plane
 -- ----------------------------
 INSERT INTO `plane` VALUES (8, 6, 'ABUS A350', 'BAM392');
+INSERT INTO `plane` VALUES (9, 6, 'ABUS A100', 'VNJ294');
+INSERT INTO `plane` VALUES (10, 5, 'AIR4921', 'VNA834');
+INSERT INTO `plane` VALUES (11, 5, 'ABUS A350', 'VNA932');
 
 -- ----------------------------
 -- Table structure for quocgias
@@ -11442,7 +11445,7 @@ CREATE TABLE `ticket`  (
   `CUS_NAME` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `PHONE` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `ADDRESS` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `STATE` int(1) UNSIGNED NULL DEFAULT 0,
+  `STATE` int(1) UNSIGNED NULL DEFAULT 0 COMMENT '1: adult, 2: child, 3:baby',
   PRIMARY KEY (`TICKET_ID`) USING BTREE,
   INDEX `FLIGHT_ID`(`FLIGHT_ID`) USING BTREE,
   CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`FLIGHT_ID`) REFERENCES `flight` (`FLIGHT_ID`) ON DELETE CASCADE ON UPDATE NO ACTION
@@ -11451,10 +11454,10 @@ CREATE TABLE `ticket`  (
 -- ----------------------------
 -- Records of ticket
 -- ----------------------------
-INSERT INTO `ticket` VALUES (10, 'A1', 0, 18, NULL, NULL, NULL, '', 0);
-INSERT INTO `ticket` VALUES (11, 'A2', 0, 18, NULL, NULL, NULL, '', 0);
-INSERT INTO `ticket` VALUES (12, 'A3', 0, 18, NULL, NULL, NULL, '', 0);
-INSERT INTO `ticket` VALUES (13, 'A4', 0, 18, NULL, NULL, NULL, '', 0);
+INSERT INTO `ticket` VALUES (10, 'A1', 2, 18, 'a', 'asdsamlk', '0299341', 'fff', 2);
+INSERT INTO `ticket` VALUES (11, 'A2', -1, 18, NULL, NULL, NULL, '', 0);
+INSERT INTO `ticket` VALUES (12, 'A3', -1, 18, NULL, NULL, NULL, '', 0);
+INSERT INTO `ticket` VALUES (13, 'A4', -1, 18, NULL, NULL, NULL, '', 0);
 
 -- ----------------------------
 -- Table structure for tintucs

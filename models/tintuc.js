@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Tintuc.belongsToMany(models.Tag, {
-        through: "TintucTags"
+        through: "tintuctags"
       });
       Tintuc.hasMany(models.TintucTag)
     }
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Tintuc',
+    modelName: 'tintuc',
   });
   return Tintuc;
 };

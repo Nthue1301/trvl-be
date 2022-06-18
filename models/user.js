@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.belongsToMany(models.Role, {
-        through: "UserRoles"
+        through: "userRoles"
       }),
         User.belongsToMany(models.Tour, {
-          through: "Hoadons"
+          through: "hoadons"
         }),
         User.belongsToMany(models.Tour, {
-          through: "Binhluans"
+          through: "binhluans"
         }),
         User.hasMany(models.UserRole),
         User.hasMany(models.Hoadoncanhan),
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'User',
+    modelName: 'user',
   });
   return User;
 };

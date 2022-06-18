@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Quocgia',
-    tableName: 'Quocgias'
+    modelName: 'quocgia',
+    tableName: 'quocgias'
   });
   return Quocgia;
 };

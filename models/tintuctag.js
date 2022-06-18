@@ -22,20 +22,20 @@ module.exports = (sequelize, DataTypes) => {
     tintucId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Tintuc",
+        model: "tintuc",
         key: "id"
       }
     },
     tagId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Tag",
+        model: "tag",
         key: "id"
       }
     }
   }, {
     sequelize,
-    modelName: 'TintucTag',
+    modelName: 'tintucTag',
   });
   return TintucTag;
 };

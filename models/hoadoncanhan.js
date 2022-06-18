@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "User",
+        model: "user",
         key: "id"
       }
     },
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     agree: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Hoadoncanhan',
+    modelName: 'hoadoncanhan',
   });
   return Hoadoncanhan;
 };

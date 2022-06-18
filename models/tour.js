@@ -12,26 +12,26 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
 
       Tour.belongsToMany(models.User, {
-        through: "Binhluans"
+        through: "binhluans"
       }),
         Tour.belongsToMany(models.Dichvu, {
-          through: "DichvuTours"
+          through: "dichvutours"
         }),
         Tour.belongsToMany(models.User, {
-          through: "Hoadons"
+          through: "hoadons"
         }),
         Tour.belongsToMany(models.Ngaydi, {
-          through: "TourNgaydis"
+          through: "tourngaydis"
         }),
         Tour.hasMany(models.Anh),
         Tour.belongsToMany(models.Loaitour, {
-          through: "TourLoaitours"
+          through: "tourloaitours"
         }),
         Tour.belongsToMany(models.Diadiem, {
-          through: "TourDiadiems"
+          through: "tourdiadiems"
         }),
         Tour.belongsToMany(models.Khuyenmai, {
-          through: "TourKhuyenmais"
+          through: "tourkhuyenmais"
         })
       Tour.hasMany(models.TourKhuyenmai),
         Tour.hasMany(models.TourDiadiem),
@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
     thoigian: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Tour',
+    modelName: 'tour',
   });
   return Tour;
 };

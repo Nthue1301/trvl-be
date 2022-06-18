@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Lienhe',
+    modelName: 'lienhe',
   });
   return Lienhe;
 };

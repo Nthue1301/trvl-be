@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Loaitour.belongsToMany(models.Tour, {
-        through: "TourLoaitours"
+        through: "tourloaitours"
       })
     }
   };
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Loaitour',
+    modelName: 'loaitour',
   });
   return Loaitour;
 };

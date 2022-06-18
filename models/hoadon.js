@@ -22,14 +22,14 @@ module.exports = (sequelize, DataTypes) => {
     tourId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Tour",
+        model: "tour",
         key: "id"
       }
     },
     userId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "User",
+        model: "user",
         key: "id"
       }
     },
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     thanhtien: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Hoadon',
+    modelName: 'hoadon',
   });
   return Hoadon;
 };

@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id"
       }),
         Diadiem.belongsToMany(models.Tour, {
-          through: "TourDiadiems"
+          through: "tourdiadiems"
         })
     }
   };
@@ -25,13 +25,13 @@ module.exports = (sequelize, DataTypes) => {
     quocgiaId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Quocgia",
+        model: "quocgia",
         key: "id"
       }
     }
   }, {
     sequelize,
-    modelName: 'Diadiem',
+    modelName: 'diadiem',
   });
   return Diadiem;
 };

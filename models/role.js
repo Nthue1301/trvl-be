@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Role.belongsToMany(models.User, {
-        through: "Roles"
+        through: "roles"
       })
     }
   };
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     mota: DataTypes.STRING(1000)
   }, {
     sequelize,
-    modelName: 'Role',
+    modelName: 'role',
   });
   return Role;
 };
