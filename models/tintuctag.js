@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      TintucTag.belongsTo(models.Tag, {
+      TintucTag.belongsTo(models.tag, {
         foreignKey: "tagId"
       });
-      TintucTag.belongsTo(models.Tintuc, {
+      TintucTag.belongsTo(models.tintuc, {
         foreignKey: "tintucId"
       });
     }

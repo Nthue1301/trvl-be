@@ -10,18 +10,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.belongsToMany(models.Role, {
-        through: "userRoles"
+      User.belongsToMany(models.role, {
+        through: "userroles"
       }),
-        User.belongsToMany(models.Tour, {
+        User.belongsToMany(models.tour, {
           through: "hoadons"
         }),
-        User.belongsToMany(models.Tour, {
+        User.belongsToMany(models.tour, {
           through: "binhluans"
         }),
-        User.hasMany(models.UserRole),
-        User.hasMany(models.Hoadoncanhan),
-        User.hasMany(models.Thongbao)
+        User.hasMany(models.userrole),
+        User.hasMany(models.hoadoncanhan),
+        User.hasMany(models.thongbao)
     }
   };
   User.init({

@@ -11,33 +11,33 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
 
-      Tour.belongsToMany(models.User, {
+      Tour.belongsToMany(models.user, {
         through: "binhluans"
       }),
-        Tour.belongsToMany(models.Dichvu, {
+        Tour.belongsToMany(models.dichvu, {
           through: "dichvutours"
         }),
-        Tour.belongsToMany(models.User, {
+        Tour.belongsToMany(models.user, {
           through: "hoadons"
         }),
-        Tour.belongsToMany(models.Ngaydi, {
+        Tour.belongsToMany(models.ngaydi, {
           through: "tourngaydis"
         }),
-        Tour.hasMany(models.Anh),
-        Tour.belongsToMany(models.Loaitour, {
+        Tour.hasMany(models.anh),
+        Tour.belongsToMany(models.loaitour, {
           through: "tourloaitours"
         }),
-        Tour.belongsToMany(models.Diadiem, {
+        Tour.belongsToMany(models.diadiem, {
           through: "tourdiadiems"
         }),
-        Tour.belongsToMany(models.Khuyenmai, {
+        Tour.belongsToMany(models.khuyenmai, {
           through: "tourkhuyenmais"
         })
-      Tour.hasMany(models.TourKhuyenmai),
-        Tour.hasMany(models.TourDiadiem),
-        Tour.hasMany(models.TourLoaitour),
-        Tour.hasMany(models.DichvuTour),
-        Tour.hasMany(models.TourNgaydi)
+      Tour.hasMany(models.tourkhuyenmai),
+        Tour.hasMany(models.tourdiadiem),
+        Tour.hasMany(models.tourloaitour),
+        Tour.hasMany(models.dichvutour),
+        Tour.hasMany(models.tourngaydi)
     }
   };
   Tour.init({

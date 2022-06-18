@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Tintuc.belongsToMany(models.Tag, {
+      Tintuc.belongsToMany(models.tag, {
         through: "tintuctags"
       });
-      Tintuc.hasMany(models.TintucTag)
+      Tintuc.hasMany(models.tintuctag)
     }
   };
   Tintuc.init({
