@@ -4,15 +4,16 @@ var bodyParser = require('body-parser');
 var app = express();
 var cors = require('cors');
 const Stripe = require('stripe');
+const path = require("path");
 const stripe = Stripe('sk_test_51I0p5CE2oIGbiAkNKJaWSk365kSmnPzzrfvQAp4lkM6iGiNTugbQdol1nl11aWzArovRmGu176bRgJAzeikbuZFX00XBiDY3EB');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.get("/", (req, res) => {
-    res.send("<h1>Chào tất cả các bạn đến với api vinhtravel!</h1>");
-}
-)
+// app.get("/", (req, res) => {
+//     res.send("<h1>Chào tất cả các bạn đến với api vinhtravel!</h1>");
+// })
+app.use(express.static(path.join(__dirname, 'build')));
 app.post("/payment", async (req, res) => {
     const { email, price } = req.body;
     const paymentIntent = await stripe.paymentIntents.create({
